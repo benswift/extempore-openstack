@@ -1,0 +1,17 @@
+#cloud-config
+
+coreos:
+  etcd:
+    # generate a new token for each unique cluster from https://discovery.etcd.io/new
+    discovery: https://discovery.etcd.io/22971a82ea4ed076f981b7b621eda9f7
+    # multi-region and multi-cloud deployments need to use $public_ipv4
+    addr: $private_ipv4:4001
+    peer-addr: $private_ipv4:7001
+  units:
+    - name: etcd.service
+      command: start
+    - name: fleet.service
+      command: start
+ssh_authorized_keys:
+  # include one or more SSH public keys
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDkG//CgEisMs1qKQlpLUAA7l2kaO7zZxMNBBgGvfrRCWUksqUI8v6fJUzX+xjQkSOz1V4FOexryTvRj1k7LwDOCEA0GFaugt24adNQcT5im/oTqnwgBTKwkxjYeoP+aOfD1FIja2IYHnaPscd+7XkTF66Q1o9FaqweX/7X+zFgnmLOS0gqCXkBoZVkWcYCZs/8elNr+dhdzMtkiwSBbODlD4f9yuxw8UWG5tkMYF+iGByp3r8toziHAHf223Gw5RvIV80XQHuMrdPuPBulsyUy9q+H+kCS5Y/lJPFsdku3fVf/eRvVw6we4kkculs1F99nKsvVXfrT0w7fqpMAxprL ben@hodgey.local

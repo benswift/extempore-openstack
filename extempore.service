@@ -1,0 +1,13 @@
+[Unit]
+Description=Extempore
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill benswift/extempore
+ExecStart=/usr/bin/docker run --rm -p 7099:7099 -p 7099:7099 --privileged benswift/extempore --nodevice
+ExecStop=/usr/bin/docker stop benswift/extempore
+
+[X-Fleet]
+Global=true

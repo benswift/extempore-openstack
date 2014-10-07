@@ -19,9 +19,16 @@ nova keypair-add --pub_key ~/.ssh/extempore.pub extempore
 ** coreos group
 
 #+BEGIN_SRC sh
+# nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0     # ping - should this be /24 ?
+nova secgroup-add-rule default tcp 22 22 0.0.0.0/0      # ssh - should this be /24 ?
+#+END_SRC
+
+
+#+BEGIN_SRC sh
 nova secgroup-create coreos "CoreOS: etcd & fleet"
 nova secgroup-add-rule coreos tcp 4001 4001 0.0.0.0/0  # etcd
 nova secgroup-add-rule coreos tcp 7001 7001 0.0.0.0/0  # fleet
+nova secgroup-add-rule coreos tcp 5000 5000 0.0.0.0/0  # docker registry (private)
 #+END_SRC
 
 ** extempore group
@@ -30,8 +37,6 @@ nova secgroup-add-rule coreos tcp 7001 7001 0.0.0.0/0  # fleet
 nova secgroup-create extempore "Security group settings for Extempore"
 nova secgroup-add-rule extempore tcp 7099 7099 0.0.0.0/0  # extempore primary process
 nova secgroup-add-rule extempore tcp 7098 7098 0.0.0.0/0  # extempore utility process
-nova secgroup-add-rule extempore icmp -1 -1 0.0.0.0/0     # ping - should this be /24 ?
-nova secgroup-add-rule extempore tcp 22 22 0.0.0.0/0      # ssh - should this be /24 ?
 #+END_SRC
 
 also, look into =nova secgroup-add-group-rule= for dynamic group

@@ -45,11 +45,11 @@ allocation of rules (or something).
 * boot cluster
 
 #+BEGIN_SRC sh
-nova boot --user-data ./cloud-config.yaml --key-name extempore --image <image-id> --flavor m1.small --num-instances 2 --security-groups default,extempore extempore-node
+nova boot --user-data ./cloud-config.yaml --key-name extempore --image <image-id> --flavor m1.small --num-instances 2 --security-groups default,extempore coreos
 #+END_SRC
 
-not sure if the "extempore-node" name at the end of that command works
-when spinning up multiple instances
+not sure if the =coreos= name at the end of that command works when
+spinning up multiple instances---do they get uniquified?
 
 * controlling the cluster
 

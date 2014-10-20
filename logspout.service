@@ -1,15 +1,24 @@
 [Unit]
 Description=Logspout service
-After=docker.service
 Requires=docker.service
+After=docker.service
 
 [Service]
 TimeoutSec=180
-# EnvironmentFile=/etc/environment
-ExecStart=docker run -d -p 8000:8000 -v=/var/run/docker.sock:/tmp/docker.sock progrium/logspout
-# ExecStart=/bin/bash -c "exec /usr/bin/docker run --name logspout --hostname logspout-$(hostname) --volume /var/run/docker.sock:/tmp/docker.sock progrium/logspout:latest syslog://${COREOS_PRIVATE_IPV4}:10514"
-ExecStop=/usr/bin/docker stop logspout
-ExecStop=/usr/bin/docker rm logspout
+EnvironmentFile=/etc/environment
+KillMode=none
+ExecStartPre=-/usr/bin/docker kill progrium/logspout
+ExecStartPre=-/usr/bin/docker pull progrium/logspout
+ExecStart=/bin/bash -c "exec /usr/bin/docker run --name logspout \
+                        --hostname logspout-$(hostname) \
+                        --volume /var/run/docker.sock:/tmp/docker.sock \
+                        progrium/logspout:latest \
+                        syslog://${COREOS_PRIVATE_IPV4}:514"
+ExecStop=/usr/bin/docker stop progrium/logspout
+ExecStop=/usr/bin/docker rm progrium/logspout
 Restart=on-failure
 TimeoutSec=300
-RestartSec=1
+RestartSec=10
+
+[X-Fleet]
+Global=true

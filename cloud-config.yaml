@@ -3,10 +3,11 @@
 coreos:
   etcd:
     # generate a new token for each unique cluster from https://discovery.etcd.io/new
-    discovery: https://discovery.etcd.io/22971a82ea4ed076f981b7b621eda9f7
-    # multi-region and multi-cloud deployments need to use $public_ipv4
-    addr: $private_ipv4:4001
-    peer-addr: $private_ipv4:7001
+    discovery: https://discovery.etcd.io/ffb6754b44f9404d2ca20a04b7835890
+    # multi-region and multi-cloud deployments need to use $public_ipv4, but they're
+    # not used for bare-metal install
+    # addr: $private_ipv4:4001
+    # peer-addr: $private_ipv4:7001
   units:
     - name: etcd.service
       command: start
@@ -14,4 +15,4 @@ coreos:
       command: start
 ssh_authorized_keys:
   # include one or more SSH public keys
-  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDkG//CgEisMs1qKQlpLUAA7l2kaO7zZxMNBBgGvfrRCWUksqUI8v6fJUzX+xjQkSOz1V4FOexryTvRj1k7LwDOCEA0GFaugt24adNQcT5im/oTqnwgBTKwkxjYeoP+aOfD1FIja2IYHnaPscd+7XkTF66Q1o9FaqweX/7X+zFgnmLOS0gqCXkBoZVkWcYCZs/8elNr+dhdzMtkiwSBbODlD4f9yuxw8UWG5tkMYF+iGByp3r8toziHAHf223Gw5RvIV80XQHuMrdPuPBulsyUy9q+H+kCS5Y/lJPFsdku3fVf/eRvVw6we4kkculs1F99nKsvVXfrT0w7fqpMAxprL ben@hodgey.local
+  - ssh-dss AAAAB3NzaC1kc3MAAACBAIDkdaSXrykPiumUQPqyqOQrZFimBazKuGeWDeM5kW00LB4OYpY7LkxWRmhXsKlrqv4LMAS661V+u8rfedOW7JJ28igadGGt3u1RnMNNCevjR9v2wppsPoBviVRY2RqjB7CuBClJF2Y+PitsHDTwuh6ojgr7odyplB0BF7bUUztNAAAAFQCMYTZQMMdzwxxDPHuOX/aL5UYBewAAAIBHdx8mr2pBVALQWG6/Yi0y19mhAwNF1OiITiz7Ug8+hKDMfoRciPcR8TutO83lMSVDiQlpnVMmZs+iqQb+PYu8XXHituK/5Pl9lA/zAMJMu+sk01SdHDHsST1sHNqpMjefEPRA2awjsnMgdGsVPdlJKPd5kSFMNkcyJAoVbM25vgAAAIB5eRoYCvKAuBZ/+Ug1vbXecK9zyAlCV9a6kE1Y4VebXmDXZX2uG95Bf8vfC9tvOBRf4Z1/+seS25qE1WkYoYSDCdfzesw+b9ecc5YWLdK+1ZAOuzMeTm2dAhU5C6Hr2IPb6UHhVgPxl7+33QCybnkgrddmvc3fnZ01zF+2h5s04g== ben@hodgey.local
